@@ -1,0 +1,49 @@
+.promo-banner {
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; /* Ensures the background is fixed */
+  color: white;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.promo-content {
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.promo-content h1 {
+  font-size: 2rem;
+  margin: 10px 0;
+}
+
+.promo-content h2 {
+  font-size: 1.5rem;
+  margin: 10px 0;
+}
+
+.promo-content p {
+  font-size: 1rem;
+  margin: 10px 0;
+}
+
+.shop-now-btn {
+  background-color: #ffc107; /* Yellow color */
+  border: none;
+  color: black;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.shop-now-btn:hover {
+  background-color: #e0a800;
+}

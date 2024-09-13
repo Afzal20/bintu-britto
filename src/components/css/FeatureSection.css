@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+.feature-section {
+    background-color: #000;
+    color: #fff;
+    padding: 0.5rem 0;
+    width: 95%;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 225px;
+    font-family: "Roboto", sans-serif;
+    font-weight: 100;
+    font-style: normal;
+}
+
+.spac {
+    height: 20px;
+}
+
+.feature-container {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 2rem;
+    max-width: 80rem;
+    margin: 0 auto;
+}
+
+@media (min-width: 1000px) {
+    .feature-container {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.feature-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.feature-title {
+    color: #E7C400;
+    font-weight: bold;
+    font-size: 1.125rem;
+    margin-bottom: 0.5rem;
+}
+
+.feature-details {
+    list-style: none;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 16px;
+}
+
+
+@media (max-width: 1000px) {
+    .feature-container {
+        grid-template-columns: repeat(2, 2fr);
+    }
+
+    .feature-section {
+        background-color: #000;
+        color: #fff;
+        padding: 0.5rem 0;
+        width: 95%;
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 455px;
+        font-family: "Roboto", sans-serif;
+        font-weight: 100;
+        font-style: normal;
+    }
+}
+
+
+@media (max-width: 770px) {
+    .feature-container {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .feature-section {
+        background-color: #000;
+        color: #fff;
+        padding: 0.5rem 0;
+        width: 95%;
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 910px;
+        font-family: "Roboto", sans-serif;
+        font-weight: 100;
+        font-style: normal;
+    }
+}

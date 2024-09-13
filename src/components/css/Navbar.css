@@ -1,0 +1,314 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.space{
+    height: 68px;
+}
+
+.navbar {
+    background-color: black;
+    color: #E7C400;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    height: 67.9px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 5;
+}
+
+.logo img {
+    width: auto;
+    height: 50px;
+    transition: all 0.3s ease-in-out;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    position: relative;
+    flex-grow: 1;
+    max-width: 600px;
+    margin: 0 20px;
+}
+
+.search-bar input {
+    width: 100%;
+    height: 40px;
+    border-radius: 32px;
+    border: 1px solid #E7C400;
+    background-color: #454E5E;
+    color: #E7C400;
+    padding: 0 50px 0 20px;
+    font-size: 16px;
+}
+
+.search-bar input::placeholder {
+    color: #E7C400;
+}
+
+.search-bar button {
+    position: absolute;
+    right: 0px;
+    height: 100%;
+    padding: 0 20px;
+    border-radius: 0 32px 32px 0;
+    border: 1px solid #E7C400;
+    background-color: #E7C400;
+    color: #000;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.searchIcon {
+    padding-top: 5px;
+    font-size: 20px;
+}
+
+.cartIcon {
+    font-size: 30px;
+    position: relative;
+    top: 5px;
+    margin-right: 5px;
+}
+
+.accountsIcon {
+    font-size: 30px;
+    position: relative;
+}
+
+.cart-total--item {
+    background-color: #E7C400;
+    color: #000;
+    border-radius: 50%;
+    padding: 2px 8px;
+    font-size: 12px;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+}
+
+ul {
+    list-style-type: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+ul li {
+    margin: 0 10px;
+}
+
+ul li a {
+    color: #E7C400;
+    text-decoration: none;
+    font-size: 16px;
+    position: relative;
+}
+
+ul li a:hover {
+    color: #fff;
+}
+
+ul li a.active {
+    font-weight: bold;
+    border-bottom: 2px solid #E7C400;
+}
+
+button {
+    background-color: #E7C400;
+    color: #454E5E;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #d6b300;
+}
+
+.mobile-navbar-btn {
+    display: none;
+    z-index: 1001; /* Ensure the mobile button is above the open navbar */
+}
+
+.mobile-navbar-btn--icon {
+    font-size: 30px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #E7C400;
+}
+
+@media (max-width: 768px) {
+    .searchIcon {
+        display: none;
+    }
+
+    .cart-total--item {
+        background-color: #E7C400;
+        color: #000;
+        border-radius: 50%;
+        padding: 2px 8px;
+        font-size: 12px;
+        position: absolute;
+        top: 0px;
+        right: 75%;
+    }
+
+    .search-bar {
+        width: 60%;
+        position: absolute;
+        left: 22%;
+    }
+
+    .search-bar input {
+        width: 100%;
+        height: 40px;
+    }
+
+    /* .slick-slider  {
+        display: none;
+    }
+    .slick-initialized
+    {
+        display: none;
+    } */
+
+    ul {
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100%;
+        width: 50%;
+        background-color: black;
+        flex-direction: column;
+        align-items: flex-start;
+        max-height: 100%;
+        transform: translateX(100%);
+        transition: transform 0.3s ease-in-out;
+        z-index: 1000;
+    }
+
+    ul.nav-links.active {
+        transform: translateX(0);
+    }
+
+    ul li {
+        width: 100%;
+        text-align: left;
+        margin: 0;
+        padding: 10px 20px;
+    }
+
+    .mobile-navbar-btn {
+        display: block;
+        position: fixed;
+        right: 20px; /* Ensure it's always on the right side */
+        z-index: 1001; /* Ensure it's above the open navbar */
+    }
+
+    .logo img {
+        width: auto;
+        height: 40px;
+        margin-left: 10px;
+    }
+
+    .search-bar button {
+        height: 40px;
+    }
+}
+
+@media (max-width: 440px) {
+    .searchIcon {
+        display: none;
+    }
+
+    .navbar {
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        padding: 10px;
+    }
+
+    .logo img {
+        height: 35px;
+    }
+
+    .search-bar {
+        width: 60%;
+        position: absolute;
+        left: 27%;
+    }
+
+    .search-bar input {
+        width: calc(100% - 40px);
+        height: 35px;
+        padding: 0 40px 0 15px;
+    }
+
+    .search-bar button {
+        height: 35px;
+    }
+
+    ul {
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100%;
+        width: 50%;
+        background-color: black;
+        flex-direction: column;
+        align-items: flex-start;
+        max-height: 100%;
+        transform: translateX(100%);
+        transition: transform 0.3s ease-in-out;
+        z-index: 1000;
+    }
+
+    ul.nav-links.active {
+        transform: translateX(0);
+    }
+
+    ul li {
+        width: 100%;
+        text-align: left;
+        margin: 0;
+        padding: 10px 20px;
+    }
+
+    .mobile-navbar-btn {
+        display: block;
+        margin-left: auto;
+        position: fixed;
+        right: 10px; /* Ensure it's always on the right side */
+        z-index: 1001; /* Ensure it's above the open navbar */
+    }
+
+    .mobile-navbar-btn--icon {
+        font-size: 25px;
+        z-index: 1001;
+    }
+}
+
+@media (min-width: 768px) {
+    .navbar {
+        justify-content: flex-start;
+    }
+
+    .search-bar {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .mobile-navbar-btn {
+        margin-left: auto;
+    }
+}
