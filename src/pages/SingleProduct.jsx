@@ -1,15 +1,21 @@
 import React from 'react';
-import './css/SingleProduct.css';
-import ProductsDetails from'../components/ProcustDetails';
-import FeaturedProducts from '../components/FeaturedProducts';
-
+import { useParams } from 'react-router-dom';
+import ProductsDetails from '../components/ProcustDetails'; 
+import SimilarProducts from '../components/SimilarProducts';
+import Navbar from '../components/navbar'; 
+import Footer from '../components/Footer';
 
 const SingleProduct = () => {
-  
-  return <>
-  <ProductsDetails />
-  <FeaturedProducts heading="Other Products"/>
-  </>
+  const { productId } = useParams(); // Retrieve productId from URL
+
+  return (
+    <>
+      <Navbar />
+      <ProductsDetails />
+      <SimilarProducts productId={productId} />
+      <Footer/>
+    </>
+  );
 };
 
 export default SingleProduct;
