@@ -1,18 +1,27 @@
-// src/components/Login.js
 import React, { useState } from 'react';
 import './css/login.css'; 
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [error, setError] = useState(null);
 
   const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log('Email:', email);
-    console.log('Password:', password);
-    // Add your login logic here (e.g., API call for authentication)
-  };
+  event.preventDefault();
+
+  // Simple validation (for example purposes)
+  if (!email || !password) {
+    setError('Email and password are required');
+    return;
+  }
+
+  console.log('Email:', email);
+  console.log('Password:', password);
+  setError(null); // Clear error if the validation passes
+
+  // Add your login logic here (e.g., API call for authentication)
+};
+
 
   return (
     <section className="container-forms">

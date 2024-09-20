@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './css/register.css'; 
-import { GoogleLogin } from 'react-google-login';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -30,16 +29,6 @@ const Register = () => {
     // Handle registration logic here
     console.log('Email:', email);
     console.log('Password:', password);
-  };
-
-  const handleGoogleSuccess = (response) => {
-    console.log('Google Response:', response);
-    // Handle Google authentication success here
-  };
-
-  const handleGoogleFailure = (error) => {
-    console.error('Google Login Error:', error);
-    // Handle Google authentication failure here
   };
 
   return (
@@ -87,16 +76,6 @@ const Register = () => {
           </div>
           <div className="form-link">
             <p>Already have an account? <a href="/login">Login</a></p>
-          </div>
-          <div className="divider">or</div>
-          <div className="continue-with-google">
-            <GoogleLogin
-              clientId="YOUR_GOOGLE_CLIENT_ID" // Replace with your Google client ID
-              buttonText="Continue with Google"
-              onSuccess={handleGoogleSuccess}
-              onFailure={handleGoogleFailure}
-              cookiePolicy={'single_host_origin'}
-            />
           </div>
         </form>
       </div>
