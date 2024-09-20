@@ -97,14 +97,14 @@ class RefundViewSet(viewsets.ModelViewSet):
     queryset = Refund.objects.all()
     serializer_class = RefundSerializer
 
-
 @api_view(['GET'])
 def get_item_by_product_id(request, product_id):
     try:
-        # Use filter and then first() to safely retrieve the object
-        item = Item.objects.filter(product_id=product_id).first()
-        
+        # Fetch the item by product_id
+        item = Item.objects.prefetch_related('images', 'item_size__size', 'item_color__color').filter(product_id=product_id).first()
+
         if item:
+            # Serialize the item using the ItemSerializer
             serializer = ItemSerializer(item)
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:

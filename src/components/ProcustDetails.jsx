@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import "../components/css/ProductsPage.css";
 import Colors from "../components/Colors";
 import DetailsThumb from "../components/DetailsThumb";
-import axios from 'axios';
+import axios from "axios";
 
 const ProductsDetails = () => {
   const [product, setProduct] = useState(null);
@@ -11,6 +11,7 @@ const ProductsDetails = () => {
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
   const [quantity, setQuantity] = useState(1);
+  const [error, setError] = useState(null); // Error handling
   const myRef = useRef();
 
   const { productId } = useParams();
@@ -18,35 +19,33 @@ const ProductsDetails = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:8000/api/items/${productId}/`);
+        const response = await axios.get(
+          `http://127.0.0.1:8000/api/items/${productId}/`
+        );
         const fetchedProduct = response.data;
 
-        // Check if `item_color` and `item_size` exist and have at least one element
+        // Log product details
+        console.log("Product details:", fetchedProduct);
+
         setProduct(fetchedProduct);
+
         if (fetchedProduct.item_color && fetchedProduct.item_color.length > 0) {
           setSelectedColor(fetchedProduct.item_color[0].color.name);
         }
+
         if (fetchedProduct.item_size && fetchedProduct.item_size.length > 0) {
           setSelectedSize(fetchedProduct.item_size[0].size.name);
         }
       } catch (error) {
-        console.error('Error fetching product details:', error);
+        console.error("Error fetching product details:", error);
+        setError("Failed to load product. Please try again.");
       }
     };
 
     fetchProduct();
   }, [productId]);
 
-  useEffect(() => {
-    if (product && myRef.current) {
-      const images = myRef.current.children;
-      if (images[index]) {
-        images[index].className = "active";
-      }
-    }
-  }, [index, product]);
-
-  const handleTab = (index) => {
+  const handleTab = useCallback((index) => {
     setIndex(index);
     const images = myRef.current.children;
     for (let i = 0; i < images.length; i++) {
@@ -55,21 +54,22 @@ const ProductsDetails = () => {
     if (images[index]) {
       images[index].className = "active";
     }
-  };
+  }, []);
 
-  const handleColorChange = (color) => {
+  const handleColorChange = useCallback((color) => {
     setSelectedColor(color);
     console.log(`Selected Color: ${color}`);
-  };
+  }, []);
 
-  const handleSizeChange = (size) => {
+  const handleSizeChange = useCallback((size) => {
     setSelectedSize(size);
     console.log(`Selected Size: ${size}`);
-  };
+  }, []);
 
   const handleQuantityChange = (e) => {
     const value = parseInt(e.target.value, 10);
-    if (value >= 1) {
+    if (value >= 1 && value <= 10) {
+      // Set a limit for quantity
       setQuantity(value);
     }
   };
@@ -78,21 +78,26 @@ const ProductsDetails = () => {
     if (!selectedColor || !selectedSize) {
       alert("Please select a color and size.");
     } else {
-      const sizePrice = product.item_size.find(s => s.size.name === selectedSize);
+      const sizePrice = product.item_size.find(
+        (s) => s.size.name === selectedSize
+      );
       const price = sizePrice ? sizePrice.price_for_this_size : product.price;
-      console.log(`Selected Color: ${selectedColor}, Size: ${selectedSize}, Price: ${price}`);
-      // Add further logic to add to cart here
+      console.log(
+        `Selected Color: ${selectedColor}, Size: ${selectedSize}, Price: ${price}, Quantity: ${quantity}`
+      );
+      // Add further logic to add to cart here (e.g., dispatch to cart state)
     }
   };
 
-  if (!product) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>; // Show error if fetch fails
+  if (!product) return <div className="loading-spinner">Loading...</div>; // Loading spinner
 
   return (
     <div className="product">
       <div className="details">
         <div className="big-img">
           {product.images && product.images.length > 0 ? (
-            <img src={product.images[index].image} alt={product.title} />
+            <img src={product.images[index]?.image} alt={product.title} />
           ) : (
             <p>No image available</p>
           )}
@@ -101,7 +106,13 @@ const ProductsDetails = () => {
         <div className="box">
           <div className="row">
             <h2>{product.title}</h2>
-            <span>${product.discount_price || product.price}</span>
+            <span>
+              $
+              {selectedSize
+                ? product.item_size.find((s) => s.size.name === selectedSize)
+                    ?.price_for_this_size
+                : product.price}
+            </span>
           </div>
 
           <div className="options">
@@ -109,7 +120,7 @@ const ProductsDetails = () => {
               <div className="colors">
                 <h3>Select Color:</h3>
                 <Colors
-                  colors={product.item_color.map(color => color.color.name)}
+                  colors={product.item_color.map((color) => color.color.name)}
                   selectedColor={selectedColor}
                   onColorChange={handleColorChange}
                 />
@@ -123,7 +134,7 @@ const ProductsDetails = () => {
                   value={selectedSize}
                   onChange={(e) => handleSizeChange(e.target.value)}
                 >
-                  {product.item_size.map(size => (
+                  {product.item_size.map((size) => (
                     <option key={size.size.id} value={size.size.name}>
                       {size.size.name}
                     </option>
@@ -139,6 +150,7 @@ const ProductsDetails = () => {
                 value={quantity}
                 onChange={handleQuantityChange}
                 min="1"
+                max="10" // Set an upper limit for quantity
               />
             </div>
           </div>
@@ -146,9 +158,15 @@ const ProductsDetails = () => {
           <p>{product.description}</p>
 
           {product.images && product.images.length > 0 && (
-            <DetailsThumb images={product.images.map(img => img.image)} tab={handleTab} myRef={myRef} />
+            <DetailsThumb
+              images={product.images.map((img) => img.image)}
+              tab={handleTab}
+              myRef={myRef}
+            />
           )}
-          <button className="cart" onClick={handleAddToCart}>Add to cart</button>
+          <button className="cart" onClick={handleAddToCart}>
+            Add to cart
+          </button>
         </div>
       </div>
     </div>

@@ -5,6 +5,8 @@ from .models import (
     Slider, BillingAddress, Payment, Coupon, Refund
 )
 
+# Nested Serializers
+
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
@@ -59,11 +61,16 @@ class ItemColorSerializer(serializers.ModelSerializer):
         model = ItemColor
         fields = ['id', 'color']
 
+# Main Item Serializer
+
 class ItemSerializer(serializers.ModelSerializer):
-    images = ItemImageSerializer(many=True)
-    item_size = ItemSizeSerializer(many=True)
-    item_color = ItemColorSerializer(many=True)
-    
+    images = ItemImageSerializer(many=True)  # Get all related images
+    item_size = ItemSizeSerializer(many=True)  # Get all related sizes with details
+    item_color = ItemColorSerializer(many=True)  # Get all related colors with details
+    category = CategorySerializer()  # Nested serializer for category
+    type = ItemTypeSerializer()  # Nested serializer for item type
+    ratings = RatingSerializer()  # Nested serializer for ratings
+
     class Meta:
         model = Item
         fields = [
@@ -71,6 +78,10 @@ class ItemSerializer(serializers.ModelSerializer):
             'discount_price', 'product_id', 'brand_name', 'category', 'type',
             'description', 'is_featured', 'is_bestselling', 'images', 'item_size', 'item_color'
         ]
+
+
+
+# Order and Cart related Serializers
 
 class OrderItemsSerializer(serializers.ModelSerializer):
     item = ItemSerializer()
@@ -131,6 +142,7 @@ class RefundSerializer(serializers.ModelSerializer):
         fields = ['id', 'order', 'reason', 'accepted', 'email']
 
 # Admin-related Serializers
+
 class AdminBillingAddressSerializer(BillingAddressSerializer):
     class Meta(BillingAddressSerializer.Meta):
         fields = BillingAddressSerializer.Meta.fields
